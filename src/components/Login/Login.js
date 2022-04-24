@@ -1,38 +1,49 @@
+// import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useState } from 'react';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import './Login.css';
+
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [singInWithGoogle] = useSignInWithGoogle(auth);
 
     const [
         signInWithEmailAndPassword,
         user,
         loading,
         error
-      ] = useSignInWithEmailAndPassword(auth);
+    ] = useSignInWithEmailAndPassword(auth);
 
-      const navigate = useNavigate();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-
-    const handleEmailBlur = event =>{
+    const from = location.state?.from?.pathname || '/';
+    
+    const handleEmailBlur = event => {
         setEmail(event.target.value);
     }
-    const handlePasswordBlur = event =>{
+    const handlePasswordBlur = event => {
         setPassword(event.target.value);
     }
 
-    if(user){
-        navigate('/shop');
+    if (user) {
+        navigate(from, {replace: true});
     }
 
-    const handleUserSignIn = event =>{
+    const handleUserSignIn = event => {
         event.preventDefault();
         signInWithEmailAndPassword(email, password);
+    }
 
+    const handleGoogleSignIn = () =>{
+        singInWithGoogle()
+        .then( () =>{
+            navigate(from, {replace: true});
+        })
     }
     return (
         <div className='container-shadow'>
@@ -48,7 +59,7 @@ const Login = () => {
                             <label htmlFor="password">Password</label>
                             <input onBlur={handlePasswordBlur} type="password" name="password" id="" required />
                         </div>
-                        <p style={{color: 'red'}}>{error?.message}</p>
+                        <p style={{ color: 'red' }}>{error?.message}</p>
                         {
                             loading && <p>Loading...</p>
                         }
@@ -62,7 +73,7 @@ const Login = () => {
                         <span> or </span>
                         <img src="line.png" alt="" />
                     </div>
-                    <button className='btn-google'>
+                    <button onClick={handleGoogleSignIn} className='btn-google'>
                         <img src="Google__G__Logo.png" alt="" width={'25px'} />
                         <span style={{ marginLeft: '15px' }}>Continue with Google</span>
                     </button>

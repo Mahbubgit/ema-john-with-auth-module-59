@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './SignUp.css';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
@@ -10,9 +11,13 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const navigate = useNavigate();
+    const [signInWithGoogle, user] = useSignInWithGoogle(auth);
 
-    const [createUserWithEmailAndPassword, user] = useCreateUserWithEmailAndPassword(auth);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/';
+
+    const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
     const handleEmailBlur = event => {
         setEmail(event.target.value);
     }
@@ -39,15 +44,13 @@ const SignUp = () => {
             return;
         }
         createUserWithEmailAndPassword(email, password);
+    }
 
-        // if(createUserWithEmailAndPassword(email, password)){
-        //     setSuccess('User created successfully.')
-        //     return;
-        // }
-        // else{
-        //     setError(error);
-        //     return;
-        // }
+    const handleGoogleSignIn = () =>{
+        signInWithGoogle()
+        .then( () =>{
+            navigate(from, {replace: true});
+        })
     }
 
     return (
@@ -81,7 +84,7 @@ const SignUp = () => {
                         <span> or </span>
                         <img src="line.png" alt="" />
                     </div>
-                    <button className='btn-google'>
+                    <button onClick={handleGoogleSignIn} className='btn-google'>
                         <img src="Google__G__Logo.png" alt="" width={'25px'} />
                         <span style={{ marginLeft: '15px' }}>Continue with Google</span>
                     </button>

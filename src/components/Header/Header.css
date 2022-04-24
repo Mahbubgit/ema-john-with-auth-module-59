@@ -17,3 +17,26 @@
 .header a:hover{
     color: orange;
 }
+
+.link-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-out{
+    background-color: #1C2B35;
+    color: red;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
+    margin-left: 36px;
+}
+.login-user{
+    font-size: 17px;
+    margin-left: 40px;
+    color: yellow;
+}
+.sign-out:hover{
+    color: orange;
+}
