@@ -1,26 +1,42 @@
+.container-shadow{
+    width: 600px;
+    margin: 45px auto;
+    background: #FFE0B3;
+    border: 1px solid white;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
 .form-container {
     width: 600px;
-    margin: 0 auto;
+    margin: 0 0 10px 10px;
     background: #FFFFFF;
     border: 1px solid #95A0A7;
     box-sizing: border-box;
     border-radius: 8px;
     display: flex;
     justify-content: center;
+    margin-top: -20px;
+    margin-right: -20px;
 }
 
+
+.content-item{
+    margin-left: 50px;
+
+}
 .form-title {
     font-size: 35px;
     font-weight: 400;
     color: #2A414F;
+    margin: 0 0 0 150px;
 }
 .input-group{
-    margin: 20px;
+    margin: 20px auto ;
 }
 .input-group label {
     display: block;
     margin-left: 5px;
-
 }
 
 .input-group input {
@@ -39,8 +55,42 @@
     border: none;
     border-radius: 5px;
     font-size: 20px;
+    cursor: pointer;
+}
+
+.form-submit:hover{
+    background-color: rgba(255, 153, 0, 0.5);
+}
+/* p{
+    margin: 10px 100px;
+} */
+.line-para{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.line-para img{
+    width: 120px;
+    height: 10px;
+}
+.line-para span{
+    margin: 0 10px 5px;
 }
 .form-link{
     color: #FF9900;
     text-decoration: none;
+}
+
+.btn-google{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 415px;
+    height: 55px;
+    background-color: white;
+    border: 1px solid #95A0A7;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 20px 0;
 }
